@@ -1,4 +1,4 @@
-name: Gym
+name: Gym_Adaptive_N_Local
 channels:
   - defaults
 dependencies:
