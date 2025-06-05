@@ -35,7 +35,7 @@ run_and_log() {
 }
 
 # 🔁 強制序列啟動
-run_and_log "qubit_4_depth_4_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder.py"
+run_and_log "qubit_4_depth_2_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder.py"
 
 
 
