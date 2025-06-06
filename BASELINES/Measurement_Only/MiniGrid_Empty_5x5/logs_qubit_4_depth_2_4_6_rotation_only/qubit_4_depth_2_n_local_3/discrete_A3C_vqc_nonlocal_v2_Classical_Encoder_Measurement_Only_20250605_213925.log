@@ -1,0 +1,34 @@
+========== qubit_4_depth_2_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder_Measurement_Only.py 開始於 Thu Jun  5 21:39:25 EDT 2025 ==========
+Traceback (most recent call last):
+  File "/home/ilk035677/A3C_ANO/BASELINES/Measurement_Only/MiniGrid_Empty_5x5/qubit_4_depth_2_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder_Measurement_Only.py", line 468, in <module>
+    gnet = Net(N_S, N_A)        # global network
+  File "/home/ilk035677/A3C_ANO/BASELINES/Measurement_Only/MiniGrid_Empty_5x5/qubit_4_depth_2_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder_Measurement_Only.py", line 322, in __init__
+    self.pi_func = Measurement_Model(n_qubits, n_local, s_dim, a_dim)
+  File "/home/ilk035677/A3C_ANO/BASELINES/Measurement_Only/MiniGrid_Empty_5x5/qubit_4_depth_2_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder_Measurement_Only.py", line 234, in __init__
+    functools.partial(quantum_circuit, n_qubits=self.n_qubits),
+NameError: name 'functools' is not defined
+Command exited with non-zero status 1
+	Command being timed: "python qubit_4_depth_2_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder_Measurement_Only.py"
+	User time (seconds): 1.89
+	System time (seconds): 0.19
+	Percent of CPU this job got: 90%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:02.30
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 318440
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 47623
+	Voluntary context switches: 84
+	Involuntary context switches: 90
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 48
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+✅ qubit_4_depth_2_n_local_3/discrete_A3C_vqc_nonlocal_v2_Classical_Encoder_Measurement_Only.py 結束於 Thu Jun  5 21:39:28 EDT 2025
