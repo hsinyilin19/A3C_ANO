@@ -213,7 +213,9 @@ def H_net(X, H, dim_A, n_qubits):
 
     # Compute Expectation values (for multi-class prediction) using n_local Hermitians
     # n_local = int(np.log2(H[0].shape[0]))
-    exp_vals = [qml.expval(qml.Hermitian(H[_], wires=range(n_qubits))) for _ in range(dim_A)]
+    exp_vals =  [qml.expval(qml.Hermitian(H[q], wires=(np.arange(q, q + n_local) % n_qubits).tolist())) for q
+				in range(n_qubits)]
+
     return exp_vals
 
 
@@ -252,7 +254,7 @@ class Measurement_Model(nn.Module):
 		X = s
 
 		# create observable H here
-		self.H = [create_Hermitian(self.N, self.A[q], self.B[q], self.D[q]) for q in range(self.dim_A)]
+		self.H = [create_Hermitian(self.N, self.A[q], self.B[q], self.D[q]) for q in range(n_qubits)]
 
 		# only measure dim_A outputs
 		q_out = torch.stack([torch.stack(self.measure(x, self.H, dim_A=self.dim_A)).float() for x in X])
@@ -317,26 +319,26 @@ class Net(nn.Module):
 		# self.pi_func = Nonlocal_VQC_Model()
 		# self.v_func = Nonlocal_VQC_Model()
 
-		self.pi_func = Measurement_Model(n_qubits, n_local, s_dim, a_dim) # In MiniGrid, the s_dim here is the same as the n_qubits since we have a classical encoder.
-		self.v_func = Measurement_Model(n_qubits, n_local, s_dim, a_dim) # In MiniGrid, the s_dim here is the same as the n_qubits since we have a classical encoder.
+		self.pi_func = Measurement_Model(n_qubits, n_local, s_dim, a_dim)
+		self.v_func = Measurement_Model(n_qubits, n_local, s_dim, a_dim)
 
 		# Linear layers to map VQC outputs to correct dimensions
 
-		# self.pi_linear = nn.Linear(n_qubits, a_dim)
-		# self.v_linear = nn.Linear(n_qubits, 1)
-		self.v_linear = nn.Linear(a_dim, 1)
+		self.pi_linear = nn.Linear(n_qubits, a_dim)
+		self.v_linear = nn.Linear(n_qubits, 1)
+		# self.v_linear = nn.Linear(a_dim, 1)
 
 		self.distribution = torch.distributions.Categorical
 
 	def forward(self, x):
 
 		x = self.encoder(x)
-
+		
 		# Policy network
 		pi_features = self.pi_func(x)
 
-		# logits = self.pi_linear(pi_features)
-		logits = pi_features
+		logits = self.pi_linear(pi_features)
+		# logits = pi_features
 
 		# Value network
 		v_features = self.v_func(x)
