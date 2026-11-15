@@ -13,7 +13,7 @@ class SharedAdam(torch.optim.Adam):
         for group in self.param_groups:
             for p in group['params']:
                 state = self.state[p]
-                state['step'] = 0
+                state['step'] = torch.zeros(())
                 state['exp_avg'] = torch.zeros_like(p.data)
                 state['exp_avg_sq'] = torch.zeros_like(p.data)
 
@@ -21,3 +21,9 @@ class SharedAdam(torch.optim.Adam):
                 state['exp_avg'].share_memory_()
                 state['exp_avg_sq'].share_memory_()
 
+    def __setstate__(self, state):
+        super().__setstate__(state)
+        # Spawned workers need their own Adam bias-correction counters.
+        for param_state in self.state.values():
+            if 'step' in param_state:
+                param_state['step'] = param_state['step'].clone()
