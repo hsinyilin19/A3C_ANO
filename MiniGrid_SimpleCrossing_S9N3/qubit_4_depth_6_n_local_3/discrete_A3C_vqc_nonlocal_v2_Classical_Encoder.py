@@ -119,10 +119,9 @@ def normalize_state(s):
     return 2.0 * (s - s_min) / (s_max - s_min) - 1.0
 
 def create_Hermitian(N, A, B, D):
-    h = torch.zeros((N, N), dtype=torch.complex128)
+    h = torch.diag(D.to(torch.complex128))
     count = 0
     for i in range(1, N):
-        h[i-1,i-1] = D[i].clone()
         for j in range(i):
             h[i,j] = A[count+j].clone() + 1j*B[count+j].clone()
         count += i
